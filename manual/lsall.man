@@ -1,0 +1,67 @@
+.\"Modified from man(1) of FreeBSD, the NetBSD mdoc.template, and mdoc.samples.
+.\"See Also:
+.\"man mdoc.samples for a complete listing of options
+.\"man mdoc for the short list of editing options
+.\"/usr/share/misc/mdoc.template
+.Dd 01/12/2023
+.Dt lsall
+.Os Linux
+.Sh NAME
+.Nm lsall
+
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm
+.Op Fl fFesdpi
+.Op Fl p Ar path
+.Op Fl f Ar char
+.Op Fl F Ar char
+.Op Fl d Ar depth
+.Op Ar file
+.Op Ar
+
+.Sh DESCRIPTION
+.El
+.Pp
+.Bl -tag -width -indent
+.It Fl p
+To enter only one path, the argument in -p. (default is './')
+.It Fl f
+Character in the first row of every line. (default is '|')
+.It Fl F
+Filler between the first character and the filename representing the current depth of the file.(if not inserted is "~")
+.It Fl e
+Doesn't show the unicode characters(emoji) used to represent files, directories...
+.It Fl s
+Shows the size of each file.
+.It Fl d
+Depth of the recursive search (If depth is negative or null, it will be counted as infinity.)
+.It Fl i
+Read file path from standard input ( The prompt is not set by default. )
+
+.El                      \" Ends the list
+.Pp
+.\" .Sh ENVIRONMENT      \" May not be needed
+.\" .Bl -tag -width "ENV_VAR_1" -indent \" ENV_VAR_1 is width of the string ENV_VAR_1
+.\" .It Ev ENV_VAR_1
+.\" Description of ENV_VAR_1
+.\" .It Ev ENV_VAR_2
+.\" Description of ENV_VAR_2
+.\" .El
+.Sh FILES                \" File used or created by the topic of the man page
+.Bl -tag -width "/Users/joeuser/Library/really_long_file_name" -compact
+.It Pa /usr/local/bin/lsall
+lsall executable
+.It Pa /usr/local/share/man/lsall.man
+manpage of lsall.
+
+.It Pa /usr/local/include/lsatree.h
+lsall library
+.El
+.Sh SEE ALSO
+
+.Xr tree 1 ,
+.Xr ls 2
+.\" .Sh BUGS              \" Document known, unremedied bugs
+.\" .Sh HISTORY           \" Document history if command behaves in a unique manner
+
+

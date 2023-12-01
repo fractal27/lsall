@@ -1,0 +1,26 @@
+#!/bin/bash
+
+echo "Installing lsall/lsa.."
+echo "Running make"
+
+make .
+    
+echo -ne "Do you want to install globally? (y/\e[1mN\e[0m)"
+read -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    sudo cp bin/* /usr/local/bin
+else
+    echo "Installing Locally"
+    if [[ ! -f ~/.bashrc ]]; then
+        echo -e "\e[33mWARNING: ~/.bashrc file is not present: making file.\e[0m"
+        touch ~/.bashrc
+    fi
+    if [[ $(grep "export PATH=\$PATH:$PWD/bin" ~/.bashrc | wc -l) -eq 0 ]]; then 
+        echo "export PATH=\$PATH:$PWD/bin" >> ~/.bashrc
+    else
+        echo -e "\e[33mWARNING: installation already present in '~/.bashrc' file: not installing.\e[0m"
+    fi
+fi
+
+
