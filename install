@@ -13,7 +13,7 @@ sudo cp build/lsall /usr/local/bin/lsa
 
 echo "Installing man files"
 
-cp build/lsall.1 /usr/share/man/man1
+cp src/lsall.1 /usr/share/man/man1
 
 echo "Installation done."
 

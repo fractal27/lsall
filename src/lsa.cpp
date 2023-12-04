@@ -1,4 +1,8 @@
+#include <vector>
+#include <lsall.h>
 #include <filesystem>
+#include <sstream>
+#include <algorithm>
 #include <string>
 #include <iostream>
 #include <unistd.h>
@@ -7,7 +11,8 @@
 #include <cmath>
 #include <lsall.h>
 #include <stdio.h>
-
+#include <fstream>
+#include <fnmatch.h>
 
 namespace fs = std::filesystem;
 
@@ -75,55 +80,133 @@ private:
    }
 };
 
+static bool doesskip(std::string str,std::vector<std::string> exclude_str){
+    for(std::string cstr:exclude_str){
+        std::string parsed;
+        std::stringstream input_sstream(str);
+        while(getline(input_sstream,parsed,'/'))
+            if(fnmatch(cstr.c_str(),parsed.c_str(),{})==0){
+                return true;
+            };
+    }
+    return false;
+}
+static std::vector<std::string> getlines_asvector(std::string filename){
+    std::fstream newfile;
+    std::vector<std::string> lines;
+    newfile.open(filename,std::ios::in); //open a file to perform read operation using file object
+    if (newfile.is_open()){              //checking whether the file is open
+        std::string tp;
+        while(getline(newfile, tp)){     //read data from file object and put it into string.
+            lines.push_back(tp);
+        }
+        newfile.close();                 //close the file object.
+    }
+    return lines;
+}
+
 static void lsall(std::string path,bool showemojis=true,bool showsize=false,
-                  bool showpath = false, char r_start='|', char r = '~', int depth=-1){
+                  bool showpath = false, char r_start='|', char r = '~', int depth=-1,
+                  std::vector<std::string> toignore = {}){
 
     std::string str;
+    std::string cstr;
     std::string last_element;
+    
     auto get_last =
             showpath?[](std::string str){return str;}
                     :[](std::string str){return std::string(str.substr(str.rfind('/') + 1));};
-    if(depth>0){
-        for (auto i = fs::recursive_directory_iterator(path);
-            i != fs::recursive_directory_iterator();
-            i++)
-        {
-            if(i.depth() > depth) continue;
-            std::cout << r_start;
-            std::cout << std::string(1 + (i.depth() << 1), r);
-            str = (*i).path();
-    
-            demo_status(i->symlink_status(),showemojis);
-            if(showsize && !fs::is_directory(*i)){
-                try{
-                    std::cout << HumanReadable{fs::file_size(*i)};
-                } catch (fs::filesystem_error err) {}
-            }
-        
-            ////last_element = std::string(str.substr(str.rfind('/') + 1));
-            last_element = get_last(str);
-            std::cout << last_element << "\033[0m" << std::endl;
-        };
-    } else {
-        for (auto i = fs::recursive_directory_iterator(path);
-            i != fs::recursive_directory_iterator();
-            ++i)
-        {
-            std::cout << r_start;
-            std::cout << std::string(1 + (i.depth() << 1), r);
-            str = (*i).path();
-    
-            demo_status(i->symlink_status(),showemojis);
-            if(showsize && !fs::is_directory(*i)){
-                try{
-                    std::cout << HumanReadable{fs::file_size(*i)};
-                } catch (fs::filesystem_error err) {}
-            }
+
+    if(toignore.size()){
+        if(depth>=0){
+            for (auto i = fs::recursive_directory_iterator(path);
+                i != fs::recursive_directory_iterator();
+                i++){
+
+                if(i.depth() > depth) continue;
+
+                str = (*i).path();
+                last_element = get_last(str);
+                if (doesskip(str,toignore)) continue;
+
+                std::cout << r_start;
+                std::cout << std::string(1 + (i.depth() << 1), r);
+                
+                demo_status(i->symlink_status(),showemojis);
+                if(showsize && !fs::is_directory(*i)){
+                    try{
+                        std::cout << HumanReadable{fs::file_size(*i)};
+                    } catch (fs::filesystem_error){};
+                }
             
-            //last_element = std::string(str.substr(str.rfind('/') + 1));
-            last_element = get_last(str);
-            std::cout << last_element << "\033[0m" << std::endl;
-        };
+                ////last_element = std::string(str.substr(str.rfind('/') + 1));
+                std::cout << last_element << "\033[0m" << std::endl;
+            };
+        } else {
+            for (auto i = fs::recursive_directory_iterator(path);
+                i != fs::recursive_directory_iterator();
+                i++){
+
+
+                str = (*i).path();
+                last_element = get_last(str);
+                if(doesskip(str,toignore)) continue;
+                std::cout << r_start;
+                std::cout << std::string(1 + (i.depth() << 1), r);
+
+
+                demo_status(i->symlink_status(),showemojis);
+                if(showsize && !fs::is_directory(*i)){
+                    try{
+                        std::cout << HumanReadable{fs::file_size(*i)};
+                    } catch (fs::filesystem_error){};
+                }
+                
+                //last_element = std::string(str.substr(str.rfind('/') + 1));
+                std::cout << last_element << "\033[0m" << std::endl;
+            };
+        }
+    } else {
+        if(depth>=0){
+            for (auto i = fs::recursive_directory_iterator(path);
+                    i != fs::recursive_directory_iterator();
+                    i++){
+                if(i.depth() > depth) continue;
+                std::cout << r_start;
+                std::cout << std::string(1 + (i.depth() << 1), r);
+                str = (*i).path();
+        
+                demo_status(i->symlink_status(),showemojis);
+                if(showsize && !fs::is_directory(*i)){
+                    try{
+                        std::cout << HumanReadable{fs::file_size(*i)};
+                    } catch (fs::filesystem_error){};
+                }
+            
+                ////last_element = std::string(str.substr(str.rfind('/') + 1));
+                last_element = get_last(str);
+                std::cout << last_element << "\033[0m" << std::endl;
+            };
+        } else {
+            for (auto i = fs::recursive_directory_iterator(path);
+                i != fs::recursive_directory_iterator();
+                i++){
+                std::cout << r_start;
+                std::cout << std::string(1 + (i.depth() << 1), r);
+                str = (*i).path();
+        
+                demo_status(i->symlink_status(),showemojis);
+                if(showsize && !fs::is_directory(*i)){
+                    try{
+                        std::cout << HumanReadable{fs::file_size(*i)};
+                    } catch (fs::filesystem_error){};
+                }
+                
+                //last_element = std::string(str.substr(str.rfind('/') + 1));
+                last_element = get_last(str);
+                std::cout << last_element << "\033[0m" << std::endl;
+            };
+        }
     }
 };
 

@@ -11,12 +11,13 @@
 
 .Sh SYNOPSIS             \" Section Header - required - don't modify
 .Nm
-.Op Fl fFesdpi
+.Op Fl fFesdpix
 .Op Fl p Ar path
 .Op Fl f Ar char
 .Op Fl F Ar char
 .Op Fl d Ar depth
-.Op Ar file
+.Op Fl x Ar pattern
+.Op Ar path
 .Op Ar
 
 .Sh DESCRIPTION
@@ -37,6 +38,8 @@ Shows the size of each file.
 Depth of the recursive search (If depth is negative or null, it will be counted as infinity.)
 .It Fl i
 Read file path from standard input ( The prompt is not set by default. )
+.It Fl x
+Excludes the paths that match to a certain linux pattern
 
 .El                      \" Ends the list
 .Pp
