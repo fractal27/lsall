@@ -11,7 +11,7 @@
 
 namespace fs = std::filesystem;
 
-static void demo_status(const fs::path& p, fs::file_status s,bool emoji)
+static void demo_status(fs::file_status s,bool emoji)
 {
     if(emoji){                              
         switch (s.type()){                      
@@ -72,32 +72,36 @@ private:
 
         os << "[" << std::ceil(mantissa * 10.) / 10. << "BKMGTPE"[o];
         return (o ? os << "B": os) << "] ";
-    }
+   }
 };
 
 static void lsall(std::string path,bool showemojis=true,bool showsize=false,
-                  bool showpath = false, char r_start='|', char r = '-', int depth=-1){
+                  bool showpath = false, char r_start='|', char r = '~', int depth=-1){
 
     std::string str;
     std::string last_element;
+    auto get_last =
+            showpath?[](std::string str){return str;}
+                    :[](std::string str){return std::string(str.substr(str.rfind('/') + 1));};
     if(depth>0){
         for (auto i = fs::recursive_directory_iterator(path);
             i != fs::recursive_directory_iterator();
-            ++i)
+            i++)
         {
             if(i.depth() > depth) continue;
             std::cout << r_start;
             std::cout << std::string(1 + (i.depth() << 1), r);
             str = (*i).path();
     
-            demo_status(*i,i->symlink_status(),showemojis);
+            demo_status(i->symlink_status(),showemojis);
             if(showsize && !fs::is_directory(*i)){
                 try{
                     std::cout << HumanReadable{fs::file_size(*i)};
                 } catch (fs::filesystem_error err) {}
             }
         
-            last_element = std::string(str.substr(str.rfind('/') + 1));
+            ////last_element = std::string(str.substr(str.rfind('/') + 1));
+            last_element = get_last(str);
             std::cout << last_element << "\033[0m" << std::endl;
         };
     } else {
@@ -109,14 +113,15 @@ static void lsall(std::string path,bool showemojis=true,bool showsize=false,
             std::cout << std::string(1 + (i.depth() << 1), r);
             str = (*i).path();
     
-            demo_status(*i,i->symlink_status(),showemojis);
+            demo_status(i->symlink_status(),showemojis);
             if(showsize && !fs::is_directory(*i)){
                 try{
                     std::cout << HumanReadable{fs::file_size(*i)};
                 } catch (fs::filesystem_error err) {}
             }
             
-            last_element = std::string(str.substr(str.rfind('/') + 1));
+            //last_element = std::string(str.substr(str.rfind('/') + 1));
+            last_element = get_last(str);
             std::cout << last_element << "\033[0m" << std::endl;
         };
     }

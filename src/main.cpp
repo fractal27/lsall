@@ -11,17 +11,13 @@
 
 
 void show_help(){
-    std::cout   << "name"<< std::endl
-                << "\tlsall"<< std::endl
-                << "SYNOPSIS:" << std::endl
-                <<"\tlsall [-ifFesp] [<path1> <path2> ... <pathn>]" << std::endl
-                << "COMMANDS:" << std::endl
-                <<"\t-h -?\tFare vedere questa finestra." << std::endl
-                <<"\t-i   \tModalità input da usare con pipe." << std::endl
-                <<"\t-f   \tInizio di ogni linea." << std::endl
+    std::cout   <<"Usage: lsall [-ifFesp] [<path1> <path2> ... <pathn>]" << std::endl
+                <<"\t-h -?\tShow help." << std::endl
+                <<"\t-i   \tGet from input(with no prompt.)." << std::endl
+                <<"\t-f   \tChange the start character of every line." << std::endl
                 <<"\t-F   \tFiller da mettere tra l'inizio della linea e il nome file." << std::endl
                 <<"\t-e   \tDisabilita le emoji." << std::endl
-                <<"\t-s   \tRendere visibile la grandezza dei file." << std::endl
+                <<"\t-s   \tShow the size of every file.." << std::endl
                 <<"\t-p   \tPercorso da vedere la struttura." << std::endl;
 }
 
@@ -43,7 +39,7 @@ int main(int argc,char** argv){
     bool done = false;
     
     // Use getopt to search through arguments and set modes
-    while ((c=getopt(argc, argv, "p:F:f:esi"))!=-1) {
+    while ((c=getopt(argc, argv, "p:F:f:esid:"))!=-1) {
         switch(c){
             case 'd':
                 depth = std::atoi(optarg);
@@ -62,6 +58,9 @@ int main(int argc,char** argv){
                 continue;
             case 's':
                 SHOWSIZE=true;
+                continue;
+            case 'S':
+                SHOW_PATH=true;
                 continue;
             case 'e':
                 DISABLEEMOJI = true;
