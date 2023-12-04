@@ -67,30 +67,30 @@ And use the flag `-d` to set the depth to the level you prefer, for example:
 
 ```bash
 $ lsa -e -d 1
+|[.]
+|~(d) src
+|~~~(r) main.cpp
+|~~~(r) lsall.1
+|~~~(r) lsa.cpp
+|~(d) include
+|~~~(r) lsall.h
+|~(r) README.md
+|~(r) CMakeLists.txt
+|~(d) .git
+|~~~(r) index
+|~~~(r) HEAD
+|~~~(d) branches
+|~~~(r) config
+|~~~(r) description
+|~~~(r) FETCH_HEAD
+|~~~(d) hooks
+|~~~(r) COMMIT_EDITMSG
+|~~~(d) objects
+|~~~(d) info
+|~~~(d) refs
+|~~~(d) logs
+|~(r) install
+|~(d) build
+|~(d) CMakeFile
 ```
->\|[.]
->|~(d) src
->|~~~(r) main.cpp
->|~~~(r) lsall.1
->|~~~(r) lsa.cpp
->|~(d) include
->|~~~(r) lsall.h
->|~(r) README.md
->|~(r) CMakeLists.txt
->|~(d) .git
->|~~~(r) index
->|~~~(r) HEAD
->|~~~(d) branches
->|~~~(r) config
->|~~~(r) description
->|~~~(r) FETCH_HEAD
->|~~~(d) hooks
->|~~~(r) COMMIT_EDITMSG
->|~~~(d) objects
->|~~~(d) info
->|~~~(d) refs
->|~~~(d) logs
->|~(r) install
->|~(d) build
->|~(d) CMakeFile
 
