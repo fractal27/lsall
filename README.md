@@ -15,14 +15,14 @@ For Linux the installation is simple
 git clone https://github.com/GDominici07/lsall.git
 ```
 
-2. Run the shell program `./install`
+2. Run `make install`
 
 and just run in bash the simple command while in the cloned project
 ```bash
-sudo ./install
+make install
 ```
 
-If you are intruigued at how the installation process works, it uses a combination of CMake and some `sudo cp` commands to add the executable files to the directory `/usr/local/bin/` and the manual(man1) page to the directory `/usr/share/man/man1`.
+If you are intruigued at how the installation process works, it uses a combination of Makefile and some copy commands to add the executable files to the directory `/usr/local/bin/` and the manual(man1) page to the directory `/usr/share/man/man1`.
 
 *NOTE*: Windows and MacOS installation is not yet implemented.
 
