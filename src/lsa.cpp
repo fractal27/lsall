@@ -16,8 +16,7 @@
 
 namespace fs = std::filesystem;
 
-static void demo_status(fs::file_status s,bool emoji)
-{
+static void demo_status(fs::file_status s,bool emoji){
     if(emoji){                              
         switch (s.type()){                      
             case fs::file_type::regular:
@@ -91,6 +90,7 @@ static bool doesskip(std::string str,std::vector<std::string> exclude_str){
     }
     return false;
 }
+/*
 static std::vector<std::string> getlines_asvector(std::string filename){
     std::fstream newfile;
     std::vector<std::string> lines;
@@ -103,12 +103,16 @@ static std::vector<std::string> getlines_asvector(std::string filename){
         newfile.close();                 //close the file object.
     }
     return lines;
-}
+}*/
 
 static void lsall(std::string path,bool showemojis=true,bool showsize=false,
                   bool showpath = false, char r_start='|', char r = '~', int depth=-1,
-                  std::vector<std::string> toignore = {}){
-
+                  std::vector<std::string> toignore = {}, bool onlydirs=false){
+/*
+static void lsall(std::string path,bool showemojis,bool showsize,
+                  bool showpath, char r_start, char r ,int depth,
+                  std::vector<std::string> toignore ,bool onlydirs){
+*/
     std::string str;
     std::string cstr;
     std::string last_element;
@@ -122,12 +126,13 @@ static void lsall(std::string path,bool showemojis=true,bool showsize=false,
             for (auto i = fs::recursive_directory_iterator(path);
                 i != fs::recursive_directory_iterator();
                 i++){
-
                 if(i.depth() > depth) continue;
+                if(onlydirs && !fs::is_directory(*i)) continue;
+                //std::cout << fs::is_directory(*i)?"<dir> ":"<file> ";
 
                 str = (*i).path();
-                last_element = get_last(str);
                 if (doesskip(str,toignore)) continue;
+
 
                 std::cout << r_start;
                 std::cout << std::string(1 + (i.depth() << 1), r);
@@ -136,10 +141,11 @@ static void lsall(std::string path,bool showemojis=true,bool showsize=false,
                 if(showsize && !fs::is_directory(*i)){
                     try{
                         std::cout << HumanReadable{fs::file_size(*i)};
-                    } catch (fs::filesystem_error){};
+                    } catch (fs::filesystem_error const&){};
                 }
             
-                ////last_element = std::string(str.substr(str.rfind('/') + 1));
+                last_element = get_last(str);
+
                 std::cout << last_element << "\033[0m" << std::endl;
             };
         } else {
@@ -147,9 +153,10 @@ static void lsall(std::string path,bool showemojis=true,bool showsize=false,
                 i != fs::recursive_directory_iterator();
                 i++){
 
+                if(onlydirs && !fs::is_directory(*i)) continue;
+                //std::cout << fs::is_directory(*i)?"<dir> ":"<file> ";
 
                 str = (*i).path();
-                last_element = get_last(str);
                 if(doesskip(str,toignore)) continue;
                 std::cout << r_start;
                 std::cout << std::string(1 + (i.depth() << 1), r);
@@ -159,10 +166,10 @@ static void lsall(std::string path,bool showemojis=true,bool showsize=false,
                 if(showsize && !fs::is_directory(*i)){
                     try{
                         std::cout << HumanReadable{fs::file_size(*i)};
-                    } catch (fs::filesystem_error){};
+                    } catch (fs::filesystem_error const&){};
                 }
                 
-                //last_element = std::string(str.substr(str.rfind('/') + 1));
+                last_element = get_last(str);
                 std::cout << last_element << "\033[0m" << std::endl;
             };
         }
@@ -171,6 +178,7 @@ static void lsall(std::string path,bool showemojis=true,bool showsize=false,
             for (auto i = fs::recursive_directory_iterator(path);
                     i != fs::recursive_directory_iterator();
                     i++){
+                if(onlydirs && !fs::is_directory(*i)) continue;
                 if(i.depth() > depth) continue;
                 std::cout << r_start;
                 std::cout << std::string(1 + (i.depth() << 1), r);
@@ -180,7 +188,7 @@ static void lsall(std::string path,bool showemojis=true,bool showsize=false,
                 if(showsize && !fs::is_directory(*i)){
                     try{
                         std::cout << HumanReadable{fs::file_size(*i)};
-                    } catch (fs::filesystem_error){};
+                    } catch (fs::filesystem_error const&){};
                 }
             
                 ////last_element = std::string(str.substr(str.rfind('/') + 1));
@@ -191,6 +199,8 @@ static void lsall(std::string path,bool showemojis=true,bool showsize=false,
             for (auto i = fs::recursive_directory_iterator(path);
                 i != fs::recursive_directory_iterator();
                 i++){
+                if(onlydirs && !fs::is_directory(*i)) continue;
+
                 std::cout << r_start;
                 std::cout << std::string(1 + (i.depth() << 1), r);
                 str = (*i).path();
@@ -199,7 +209,7 @@ static void lsall(std::string path,bool showemojis=true,bool showsize=false,
                 if(showsize && !fs::is_directory(*i)){
                     try{
                         std::cout << HumanReadable{fs::file_size(*i)};
-                    } catch (fs::filesystem_error){};
+                    } catch (fs::filesystem_error const&){};
                 }
                 
                 //last_element = std::string(str.substr(str.rfind('/') + 1));

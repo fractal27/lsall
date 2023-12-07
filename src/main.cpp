@@ -2,8 +2,10 @@
 #include <iostream>
 #include <unistd.h>
 #include <stdlib.h>
+
+
 #include <lsall.h>
-#include "lsa.cpp"
+
 #include <stdio.h>
 
 //#include "execute.cpp"
@@ -20,7 +22,10 @@ void show_help(){
                 <<"\t-s      \tShow the size of every file.." << std::endl
                 <<"\t-p PATH \tShow only one tree(the tree of the path argument)" << std::endl
                 <<"\t-d DEPTH\tSets the depth of the recursive search." << std::endl
-                <<"\t-x      \tExcludes via linux pattern(* and ? must be escaped) all the paths that match the pattern." << std::endl;
+                <<"\t-D      \tShows only the directories in the file tree." << std::endl
+                //<<"\t--only-dirs     \tSets the depth of the recursive search." << std::endl
+                <<"\t-x      \tExcludes via linux pattern(* and ? must be escaped)"
+                              "all the paths that match the pattern." << std::endl;
 }
 
 int main(int argc,char** argv){
@@ -29,7 +34,8 @@ int main(int argc,char** argv){
     bool SHOWSIZE = false;
     bool DISABLEEMOJI = false;
     bool SHOW_PATH = false;
-    
+    bool ONLY_DIRS = false;
+
     // Arguments with necessary parameters
     char r_start = '|';
     char r_char = '~';
@@ -41,10 +47,13 @@ int main(int argc,char** argv){
     bool done = false;
     
     // Use getopt to search through arguments and set modes
-    while ((c=getopt(argc, argv, "p:F:f:esid:x:"))!=-1) {
+    while ((c=getopt(argc, argv, "p:F:f:esid:x:D"))!=-1) {
         switch(c){
             case 'd':
                 depth = std::atoi(optarg);
+                continue;
+            case 'D':
+                ONLY_DIRS = true;
                 continue;
             case 'i':
                 INPUTMODE = true;
@@ -71,6 +80,7 @@ int main(int argc,char** argv){
                 exclude_patterns.push_back(std::string(optarg));
                 continue;
             default:
+
                 fprintf(stderr,"Argument -%c not found: here is commands:\n",c);
                 show_help();
                 std::exit(1);
@@ -78,6 +88,7 @@ int main(int argc,char** argv){
                 break;
         }
     }
+    std::cout << "ONLY_DIRS:" << ONLY_DIRS<<std::endl;
     //for debugging argument -x
     //std::cout << "excludes:" << std::endl;
     //for(std::string s:exclude_patterns){
@@ -88,20 +99,23 @@ int main(int argc,char** argv){
         std::cin >> path;
         std::cout << BASE_DIRECTORY_COLOR << "[" << path << "]" << FG_RESET<< std::endl;
         
-        lsall(path,!DISABLEEMOJI,SHOWSIZE, SHOW_PATH,r_start,r_char,depth, exclude_patterns);
+        lsall(path,!DISABLEEMOJI,SHOWSIZE, SHOW_PATH,
+              r_start,r_char,depth, exclude_patterns, ONLY_DIRS);
         
         done = true;
     } else {
         for (; optind < argc; optind++){
             path = argv[optind];
             std::cout << BASE_DIRECTORY_COLOR << "[" << path << "]" << FG_RESET<< std::endl;
-            lsall(path,!DISABLEEMOJI, SHOWSIZE, SHOW_PATH, r_start, r_char, depth, exclude_patterns);
+            lsall(path,!DISABLEEMOJI, SHOWSIZE, SHOW_PATH,
+                  r_start, r_char, depth, exclude_patterns, ONLY_DIRS);
             done=true;
         }
     }
     if(!done){
         std::cout << BASE_DIRECTORY_COLOR << "[" << path << "]" << FG_RESET<< std::endl;
-        lsall(path, !DISABLEEMOJI, SHOWSIZE, SHOW_PATH, r_start, r_char, depth, exclude_patterns);
+        lsall(path,!DISABLEEMOJI, SHOWSIZE, SHOW_PATH,
+              r_start, r_char, depth, exclude_patterns, ONLY_DIRS);
     }
     return 0;
 }
