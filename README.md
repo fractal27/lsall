@@ -1,6 +1,6 @@
 # lsall
 
-Lsall is a project that focuses on the tree-like visualization of a folder, with various arguments.
+`lsall` is a project that focuses on the tree-like visualization of a directory, with various arguments.
 
 ---
 ## Installation
@@ -109,10 +109,15 @@ $ lsall -d1 -x ".git"
 |~📃 Makefile
 ```
 
-## ManPage
+## man page
 
-The [manual page](src/lsall.1)(man1) is an user made man page of the lsall project.
-Here is a screenshot of the manpage from a older version of lsall.
+The [manual page](src/lsall.1)(man1) is a man1 made page of the lsall project, and 
+it is automatically installed using `make install`.
+
+You can access it using the normal `man lsall` if the program is installed globally, but if you don't want to install it, you can still look at the manual using the relative path: `man src/lsall.1`.
+
+Here is a screenshot of the manpage from the current version of the man page of lsall.
 
 ![manpage screenshot](screenshots/lsall_manpage.png)
+
 
