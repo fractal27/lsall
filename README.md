@@ -33,8 +33,8 @@ If you are intruigued at how the installation process works, it uses a combinati
 
 the comand is used as follows:
 ```bash
-lsall [-pfFesdi] [-p PATH] [-f CHARACTER] [-F CHARACTER] [-d DEPTH]
-lsa   [-pfFesdi] [-p PATH] [-f CHARACTER] [-F CHARACTER] [-d DEPTH]
+lsall [-pfFesdDi] [-p PATH] [-f CHARACTER] [-F CHARACTER] [-d DEPTH]
+lsa   [-pfFesdDi] [-p PATH] [-f CHARACTER] [-F CHARACTER] [-d DEPTH]
 ```
 
 ### Arguments
@@ -51,8 +51,10 @@ directories\...
 
 **-s**Shows the size of each file.
 
-**-d DEPTH** Depth of the recursive search (If depth is negative or null, it will be
+**-d DEPTH** Depth of the recursive search (If depth is negative, it will be
 counted as infinity.)
+
+**-D** Only show directories from output.
 
 **-i** Read file path from standard input ( The prompt is not set by default. )
 
