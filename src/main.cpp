@@ -3,13 +3,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-
 #include <lsall.h>
-
 #include <stdio.h>
-
-//#include "execute.cpp"
-//#define areemojisupported execute_command("areemojisupported.sh")==0
 
 
 void show_help(){
@@ -42,6 +37,7 @@ int main(int argc,char** argv){
     std::vector<std::string> exclude_patterns {};
     std::string path = ".";
     int depth = -1;
+
 
     char c;
     bool done = false;
@@ -88,7 +84,6 @@ int main(int argc,char** argv){
                 break;
         }
     }
-    std::cout << "ONLY_DIRS:" << ONLY_DIRS<<std::endl;
     //for debugging argument -x
     //std::cout << "excludes:" << std::endl;
     //for(std::string s:exclude_patterns){
@@ -99,23 +94,39 @@ int main(int argc,char** argv){
         std::cin >> path;
         std::cout << BASE_DIRECTORY_COLOR << "[" << path << "]" << FG_RESET<< std::endl;
         
-        lsall(path,!DISABLEEMOJI,SHOWSIZE, SHOW_PATH,
+        try{
+
+            lsall(path,!DISABLEEMOJI,SHOWSIZE, SHOW_PATH,
               r_start,r_char,depth, exclude_patterns, ONLY_DIRS);
-        
+        } catch(fs::filesystem_error e){
+            std::cerr << "[" << e.code() << "]" << e.what() << std::endl;
+            return 1;
+        }
+
         done = true;
     } else {
         for (; optind < argc; optind++){
             path = argv[optind];
             std::cout << BASE_DIRECTORY_COLOR << "[" << path << "]" << FG_RESET<< std::endl;
-            lsall(path,!DISABLEEMOJI, SHOWSIZE, SHOW_PATH,
-                  r_start, r_char, depth, exclude_patterns, ONLY_DIRS);
+            try{
+                lsall(path,!DISABLEEMOJI,SHOWSIZE, SHOW_PATH,
+                    r_start,r_char,depth, exclude_patterns, ONLY_DIRS);
+            } catch(fs::filesystem_error e){
+            std::cerr << "[" << e.code() << "]" << e.what() << std::endl;
+                return 1;
+            }
             done=true;
         }
     }
     if(!done){
         std::cout << BASE_DIRECTORY_COLOR << "[" << path << "]" << FG_RESET<< std::endl;
-        lsall(path,!DISABLEEMOJI, SHOWSIZE, SHOW_PATH,
-              r_start, r_char, depth, exclude_patterns, ONLY_DIRS);
+        try{
+            lsall(path,!DISABLEEMOJI,SHOWSIZE, SHOW_PATH,
+                r_start,r_char,depth, exclude_patterns, ONLY_DIRS);
+        } catch(fs::filesystem_error e){
+            std::cerr << "[" << e.code() << "]" << e.what() << std::endl;
+            return 1;
+        }
     }
     return 0;
 }

@@ -1,5 +1,4 @@
 #include <vector>
-#include <lsall.h>
 #include <filesystem>
 #include <sstream>
 #include <algorithm>
@@ -14,7 +13,10 @@
 #include <fstream>
 #include <fnmatch.h>
 
+
 namespace fs = std::filesystem;
+
+
 
 static void demo_status(fs::file_status s,bool emoji){
     if(emoji){                              

@@ -10,13 +10,13 @@ CXX_FLAGS+=-fpermissive
 LSA_DIR=.
 BUILD=$(LSA_DIR)/build
 SRC_DIR=$(LSA_DIR)/src
-
-INCLUDE=$(LSA_DIR)/include
-CXX_FLAGS+=-I $(INCLUDE)
+INCLUDE_DIR=$(LSA_DIR)/include
 
 
 SRC=$(SRC_DIR)/main.cpp $(SRC_DIR)/lsa.cpp
 OBJ=$(BUILD)/lsa.o $(BUILD)/main.o
+CXX_FLAGS+=-I $(INCLUDE_DIR)
+
 
 all: clean compile link
 
@@ -31,7 +31,6 @@ compile: $(SRC)
 
 link: $(OBJ)
 	@echo "\e[32m[+] Linking object files $(OBJ)\e[0m"
-	$(CXX) $(CXX_FLAGS) $(BUILD)/lsa.o $(BUILD)/main.o -o $(BUILD)/lsa -w #Silent
 	$(CXX) $(CXX_FLAGS) $(BUILD)/lsa.o $(BUILD)/main.o -o $(BUILD)/lsall
 
 install: compile link
