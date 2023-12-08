@@ -1,5 +1,5 @@
 #Makefile 7/12/2023
-#SHELL := /bin/bash 
+SHELL := /bin/bash 
 CXX=g++
 CXX_FLAGS=-g
 CXX_FLAGS+=-std=c++2a
@@ -11,6 +11,7 @@ LSA_DIR=.
 BUILD=$(LSA_DIR)/build
 SRC_DIR=$(LSA_DIR)/src
 INCLUDE_DIR=$(LSA_DIR)/include
+TESTS_DIR=$(LSA_DIR)/tests
 
 
 SRC=$(SRC_DIR)/main.cpp $(SRC_DIR)/lsa.cpp
@@ -35,12 +36,17 @@ link: $(OBJ)
 
 install: compile link
 	@echo "\e[33m[*] Installing...\e[0m"
-	@#{ echo "\e[33m[*] Installing executables.\e[0m" && sudo cp build/lsa /usr/local/bin/lsa && sudo cp build/lsall /usr/local/bin/lsall && echo "\e[32m[+] Successfully installed executables.\e[0m"} || {echo "\e[31m[-] Failed executables installation.\e[0m"};
-	@#{ echo "\e[33m[*] Installing man files.\e[0m" && sudo cp src/lsall.1 /usr/share/man/man1 && echo "\e[32m[+] Successfully installed man files.\e[0m"} || { echo "\e[31m[-] Failed man files installation.\e[0m" };
 	./install
 	@echo "\e[32m[+] Installation done.\e[0m"
 
+$(BUILD_DIR)/demostatus_test: $(TESTS_DIR)/test_demostatus.cpp
+	g++ -o $(BUILD)/demostatus_test $(TESTS_DIR)/test_demostatus.cpp $(CXX_FLAGS) -w $(INCLUDE_DIR)/build/lib/libgtest.a
 
 
-.PHONY: clean install
+test: $(BUILD_DIR)/demostatus_test
+	@echo -e "\e[33m[*] Making tests...\e[0m"
+	$(BUILD)/demostatus_test
+
+
+.PHONY: clean install test
 
