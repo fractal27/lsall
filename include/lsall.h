@@ -19,16 +19,16 @@
 #define BASE_BLOCK_COLOR        FG_GREEN
 #define BASE_CHARACTER_COLOR    FG_MAGENTA
 #define BASE_OTHER_COLOR        FG_YELLOW
+#define BASE_CUSTOM_COLOR       FG_YELLOW
 
-namespace fs=std::filesystem;
-
+namespace fs = std::filesystem;
 
 void lsall(std::string path,bool showemojis=true,bool showsize=false,
             bool showpath = false, char r_start='|', char r = '~', int depth=-1,
             std::vector<std::string> toignore = {}, bool onlydirs=false);
 
-static void demo_status(fs::file_status s,bool emoji);
 
+static void demo_status(fs::file_status s,bool emoji);
 static bool doesskip(std::string str,std::vector<std::string> exclude_str);
 
 

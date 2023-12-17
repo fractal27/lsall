@@ -95,18 +95,22 @@ $ lsall -d1 -x ".git"
 |~📁 src
 |~~~📃 main.cpp
 |~~~📃 lsall.1
-|~~~📃 lsa.cpp
+|~~~📃 lsall.cpp
 |~📁 include
 |~~~📃 lsall.h
+|~~~📁 build
+|~~~📁 gtest
 |~📃 .gitignore
 |~📃 README.md
 |~📃 install
 |~📁 build
-|~~~📃 lsa
-|~~~📃 main.o
-|~~~📃 lsa.o
 |~~~📃 lsall
+|~~~📃 main.o
+|~~~📃 lsall.o
 |~📃 Makefile
+|~📁 screenshots
+|~~~📃 installation_linux.png
+|~~~📃 lsall_manpage.png
 ```
 
 ## man page

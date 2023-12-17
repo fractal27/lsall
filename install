@@ -14,4 +14,5 @@
     echo -e "\e[32m[+] Successfully installed man files.\e[0m"
 } || {
     echo -e "\e[31m[-] Failed man files installation.\e[0m"
-};
+}
+mkdir /etc/lsall

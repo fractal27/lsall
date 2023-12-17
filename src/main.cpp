@@ -6,6 +6,8 @@
 #include <lsall.h>
 #include <stdio.h>
 
+//TODO: implement json parser for custom emoji extension based.
+
 
 void show_help(){
     std::cout   <<"Usage: lsall [-ifFesp] [<path1> <path2> ... <pathn>]" << std::endl
@@ -89,6 +91,7 @@ int main(int argc,char** argv){
     //for(std::string s:exclude_patterns){
     //    std::cout << "\t" << s << std::endl;
     //}
+
     if(INPUTMODE){
 
         std::cin >> path;
@@ -112,7 +115,7 @@ int main(int argc,char** argv){
                 lsall(path,!DISABLEEMOJI,SHOWSIZE, SHOW_PATH,
                     r_start,r_char,depth, exclude_patterns, ONLY_DIRS);
             } catch(fs::filesystem_error e){
-            std::cerr << "[" << e.code() << "]" << e.what() << std::endl;
+                std::cerr << "[" << e.code() << "]" << e.what() << std::endl;
                 return 1;
             }
             done=true;
