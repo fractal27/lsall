@@ -1,3 +1,6 @@
+#ifndef __LSALL_H__
+#define __LSALL_H__
+
 #include <filesystem>
 #include <vector>
 #include <string>
@@ -28,7 +31,7 @@ void lsall(std::string path,bool showemojis=true,bool showsize=false,
             std::vector<std::string> toignore = {}, bool onlydirs=false);
 
 
-static void demo_status(fs::file_status s,bool emoji);
-static bool doesskip(std::string str,std::vector<std::string> exclude_str);
+void demo_status(fs::file_status s,bool emoji);
+bool doesskip(std::string str,std::vector<std::string> exclude_str);
 
-
+#endif

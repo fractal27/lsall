@@ -10,8 +10,6 @@
 
 using std::filesystem::file_type;
 using std::filesystem::file_status;
-//using std::redirect_cout;
-//using std::reverse_redirect_cout;
 namespace fs=std::filesystem;
 
 

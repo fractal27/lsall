@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include <lsall.h>
+#include "lsall.h"
 #include <stdio.h>
 
 //TODO: implement json parser for custom emoji extension based.

@@ -5,6 +5,12 @@
 #include <functional>
 #include <ios>
 
+
+/*  -- HELPER LIBRARY FOR TESTS --
+ * */
+
+
+
 class callback_streambuf : public std::streambuf {
 public:
     callback_streambuf(std::function<void(char const*, std::streamsize)> callback) : callback(callback) {}
