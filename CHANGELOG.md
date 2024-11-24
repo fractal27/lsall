@@ -1,6 +1,6 @@
 # Changelog
 
-## Sun Nov 24 2023
+## Sun Nov 24 2024
 
 
 - Created `emoji_support` branch

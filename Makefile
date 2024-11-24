@@ -42,7 +42,7 @@ link: $(OBJ)
 
 install: compile link
 	@echo -e "\e[33m[*] Installing...\e[0m"
-	./install
+	./install_sh
 	@echo -e "\e[32m[+] Installation done.\e[0m"
 
 $(BUILD_DIR)/demostatus_test: $(TESTS_DIR)/test_demostatus.cpp
