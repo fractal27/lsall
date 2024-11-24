@@ -19,7 +19,7 @@ OBJ=$(BUILD)/lsall.o $(BUILD)/main.o
 CXX_FLAGS+=-I $(INCLUDE_DIR)
 
 
-all: compile link
+all: $(BUILD)compile link
 
 clean:
 	@echo -e "\e[33m[*] Cleaning..\e[0m"
@@ -30,6 +30,11 @@ compile: $(SRC)
 	$(MAKE) $(BUILD)/main.o
 	$(MAKE) $(BUILD)/lsall.o
 	$(MAKE) $(BUILD)/read_emojis.o
+
+$(BUILD):
+	if ![[ -f $(BUILD) ]]; then
+		mkdir $(BUILD)
+	fi
 
 $(BUILD)/main.o: $(SRC_DIR)/main.cpp
 	$(CXX) -c $(CXX_FLAGS) $(SRC_DIR)/main.cpp -o $(BUILD)/main.o
@@ -49,11 +54,11 @@ install: compile link
 	./install_sh
 	@echo -e "\e[32m[+] Installation done.\e[0m"
 
-$(BUILD_DIR)/demostatus_test: $(TESTS_DIR)/test_demostatus.cpp
-	g++ $(CXX_FLAGS) -o $(BUILD)/testRunner $(TESTS_DIR)/main.cpp $(TESTS_DIR)/test_demostatus.cpp  $(INCLUDE_DIR)/build/lib/libgtest.a -w
+$(BUILD)/testRunner: $(TESTS_DIR)/test_demostatus.cpp $(TESTS_DIR)/read_emojis.test.cpp
+	g++ -ljsoncpp $(CXX_FLAGS) -o $(BUILD)/testRunner $(TESTS_DIR)/main.cpp $(TESTS_DIR)/test_demostatus.cpp $(TESTS_DIR)/read_emojis.test.cpp $(INCLUDE_DIR)/build/lib/libgtest.a -w
 
 
-test: $(BUILD_DIR)/demostatus_test
+test: $(BUILD)/testRunner
 	@echo -e "\e[33m[*] Making tests...\e[0m"
 	$(BUILD)/testRunner
 

@@ -2,7 +2,6 @@
 
 ## Sun Nov 24 2024
 
-
 - Created `emoji_support` branch
 - Removed `emoji_ext.json` (later will be readded as an additional branch)
 

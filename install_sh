@@ -18,7 +18,7 @@
 {
     echo -e "\e[33m[*] Installing configuration files.\e[0m"
     mkdir /etc/lsall
-    mkdir /.config/lsall
+    mkdir -p ~/.config/lsall
     sudo cp emoji_ext.json /etc/lsall/
     cp emoji_ext.json ~/.config/lsall/
     echo -e "\e[32m[+] Successfully installed man files.\e[0m"

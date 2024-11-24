@@ -11,11 +11,7 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
-
-build/lsa.o
-build/lsall
-build/main.o
-build/test
+build
 
 #Testing
 emoji_ext.json

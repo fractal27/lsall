@@ -10,29 +10,31 @@
 namespace fs=std::filesystem;
 
 
-
+//std::string result;
 class read_emojis_Test: public testing::Test{};
 
-/*TODO: maybe used as test for read_emojis? 
- * std::string demostatus_for_testing(fs::path path,){
-    std::ostringstream ss;
-    redirect_cout(ss);
-    demo_status(filestatus,emojis);
-    reverse_redirect_cout();
-    return ss.str();
-}*/
-
-TEST_F(read_emojis_Test, test_regular){
-    fs::path p = "";
-
-    std::string result = demostatus_for_testing(file_status,true);
+TEST_F(read_emojis_Test, image){
+    std::string result = emoji::get_emoji("png");
+    ASSERT_EQ(result,"📷") << "png emoji incorrect";
+    result = emoji::get_emoji("jpg");
+    ASSERT_EQ(result,"📷") << "jpg emoji incorrect";
+    result = emoji::get_emoji("jpeg");
+    ASSERT_EQ(result,"📷") << "jpeg emoji incorrect";
+    result = emoji::get_emoji("webp");
+    ASSERT_EQ(result,"📷") << "webp emoji incorrect";
 }
 
-TEST_F(read_emojis_Test, test_directory){
-    fs::file_status file_status(file_type::directory);
-
-    std::string result = demostatus_for_testing(file_status,true);
+TEST_F(read_emojis_Test, icon){
+    std::string result = emoji::get_emoji("ico");
+    ASSERT_EQ(result,"👤") << "ico emoji incorrect";
 }
-
-
-
+TEST_F(read_emojis_Test, markdown){
+    std::string result = emoji::get_emoji("md");
+    ASSERT_EQ(result,"📓") << "md emoji incorrect";
+}
+TEST_F(read_emojis_Test, camel){
+    std::string result = emoji::get_emoji("ml");
+    ASSERT_EQ(result,"🐫") << "ml emoji incorrect";
+    result = emoji::get_emoji("mli");
+    ASSERT_EQ(result,"🐫") << "mli emoji incorrect";
+}

@@ -2,7 +2,7 @@
 #include <filesystem>
 #include <vector>
 #include "../src/lsall.cpp"
-#include "test.cpp"
+//#include "test.cpp"
 #include <string>
 #include <sstream>
 //#include <set>
@@ -30,11 +30,9 @@ struct arguments{
 class demostatus_Test: public testing::Test{};
 
 std::string demostatus_for_testing(fs::file_status filestatus,bool emojis){
-    std::ostringstream ss;
-    redirect_cout(ss);
-    demo_status(filestatus,emojis);
-    reverse_redirect_cout();
-    return ss.str();
+    testing::internal::CaptureStdout();
+    demo_status(filestatus,emojis,"xx.xx");
+    return testing::internal::GetCapturedStdout();
 }
 
 TEST_F(demostatus_Test, test_regular){
