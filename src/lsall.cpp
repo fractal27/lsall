@@ -1,3 +1,6 @@
+#include "read_emojis.h"
+#include "lsall.h"
+
 #include <vector>
 #include <filesystem>
 #include <sstream>
@@ -8,7 +11,6 @@
 #include <ranges>
 #include <stdlib.h>
 #include <cmath>
-#include "lsall.h"
 #include <stdio.h>
 #include <fstream>
 #include <fnmatch.h>
@@ -16,12 +18,21 @@
 namespace fs = std::filesystem;
 
 
-void demo_status(fs::file_status s,bool emoji){
-    //std::string extension = std::string(path.substr(path.rfind('.') + 1));
-    //TODO: add custom emoji process based on extensions.
+void demo_status(fs::file_status s,bool emoji, std::string path){
     if(emoji){
+        //add custom emoji process based on extensions.
+        std::string extension = std::string(path.substr(path.rfind('.') + 1));
+        std::string e = emoji::get_emoji(extension);
+        std::string c = emoji::get_emoji(extension+"(-color)");
+        if(e != ""){
+            if(c != "") std::cout << e << c; 
+            else std::cout << e << FG_RESET;
+            return;
+        }
+
         switch (s.type()){
             case fs::file_type::regular:
+                
                 std::cout << "📃 " << FG_RESET;
                 break;
             case fs::file_type::directory:
@@ -44,22 +55,22 @@ void demo_status(fs::file_status s,bool emoji){
                                             
         switch (s.type()){                      
             case fs::file_type::regular:
-                std::cout << FG_RESET << "(r) ";
+                std::cout << FG_RESET << "[r] ";
                 break;
             case fs::file_type::directory:
-                std::cout << BASE_DIRECTORY_COLOR << "(d) ";
+                std::cout << BASE_DIRECTORY_COLOR << "[d] ";
                 break;
             case fs::file_type::symlink:
-                std::cout << BASE_SYMLINK_COLOR << "(s) ";
+                std::cout << BASE_SYMLINK_COLOR << "[s] ";
                 break;
             case fs::file_type::block:
-                std::cout << BASE_BLOCK_COLOR << "(b) ";
+                std::cout << BASE_BLOCK_COLOR << "[b] ";
                 break;
             case fs::file_type::character:
-                std::cout << BASE_CHARACTER_COLOR << "(c) ";
+                std::cout << BASE_CHARACTER_COLOR << "[c] ";
                 break;
             default:
-                std::cout << BASE_OTHER_COLOR << "(?) ";
+                std::cout << BASE_OTHER_COLOR << "[?] ";
                 break;
         }                                       //switch end
     }                                       //else end
@@ -121,7 +132,7 @@ void lsall(std::string path,bool showemojis=true,bool showsize=false,
                 std::cout << r_start;
                 std::cout << std::string(1 + (i.depth() << 1), r);
                 
-                demo_status(i->symlink_status(),showemojis);
+                demo_status(i->symlink_status(),showemojis,str);
                 if(showsize && !fs::is_directory(*i)){
                     try{
                         std::cout << HumanReadable{fs::file_size(*i)};
@@ -146,7 +157,7 @@ void lsall(std::string path,bool showemojis=true,bool showsize=false,
                 std::cout << std::string(1 + (i.depth() << 1), r);
 
 
-                demo_status(i->symlink_status(),showemojis);
+                demo_status(i->symlink_status(),showemojis,str);
                 if(showsize && !fs::is_directory(*i)){
                     try{
                         std::cout << HumanReadable{fs::file_size(*i)};
@@ -168,7 +179,7 @@ void lsall(std::string path,bool showemojis=true,bool showsize=false,
                 std::cout << std::string(1 + (i.depth() << 1), r);
                 str = (*i).path();
         
-                demo_status(i->symlink_status(),showemojis);
+                demo_status(i->symlink_status(),showemojis,str);
                 if(showsize && !fs::is_directory(*i)){
                     try{
                         std::cout << HumanReadable{fs::file_size(*i)};
@@ -189,7 +200,7 @@ void lsall(std::string path,bool showemojis=true,bool showsize=false,
                 std::cout << std::string(1 + (i.depth() << 1), r);
                 str = (*i).path();
         
-                demo_status(i->symlink_status(),showemojis);
+                demo_status(i->symlink_status(),showemojis,str);
                 if(showsize && !fs::is_directory(*i)){
                     try{
                         std::cout << HumanReadable{fs::file_size(*i)};

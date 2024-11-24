@@ -29,16 +29,20 @@ compile: $(SRC)
 	@echo -e "\e[32m[+]Compiling to object files $(SRC)\e[0m"
 	$(MAKE) $(BUILD)/main.o
 	$(MAKE) $(BUILD)/lsall.o
+	$(MAKE) $(BUILD)/read_emojis.o
 
 $(BUILD)/main.o: $(SRC_DIR)/main.cpp
 	$(CXX) -c $(CXX_FLAGS) $(SRC_DIR)/main.cpp -o $(BUILD)/main.o
 
-$(BUILD)/lsall.o: $(SRC_DIR)/main.cpp
+$(BUILD)/lsall.o: $(SRC_DIR)/lsall.cpp  $(SRC_DIR)/lsall.h 
 	$(CXX) -c $(CXX_FLAGS) $(SRC_DIR)/lsall.cpp -o $(BUILD)/lsall.o
+
+$(BUILD)/read_emojis.o: $(SRC_DIR)/read_emojis.cpp $(SRC_DIR)/read_emojis.h
+	$(CXX) -c $(CXX_FLAGS) $(SRC_DIR)/read_emojis.cpp -o $(BUILD)/read_emojis.o
 
 link: $(OBJ)
 	@echo -e "\e[32m[+] Linking object files $(OBJ)\e[0m"
-	$(CXX) $(CXX_FLAGS) $(BUILD)/lsall.o $(BUILD)/main.o -o $(BUILD)/lsall
+	$(CXX) -ljsoncpp $(CXX_FLAGS) $(BUILD)/lsall.o $(BUILD)/main.o $(BUILD)/read_emojis.o -o $(BUILD)/lsall
 
 install: compile link
 	@echo -e "\e[33m[*] Installing...\e[0m"
@@ -46,12 +50,12 @@ install: compile link
 	@echo -e "\e[32m[+] Installation done.\e[0m"
 
 $(BUILD_DIR)/demostatus_test: $(TESTS_DIR)/test_demostatus.cpp
-	g++ -o $(BUILD)/demostatus_test $(TESTS_DIR)/test_demostatus.cpp $(CXX_FLAGS) -w $(INCLUDE_DIR)/build/lib/libgtest.a
+	g++ $(CXX_FLAGS) -o $(BUILD)/testRunner $(TESTS_DIR)/main.cpp $(TESTS_DIR)/test_demostatus.cpp  $(INCLUDE_DIR)/build/lib/libgtest.a -w
 
 
 test: $(BUILD_DIR)/demostatus_test
 	@echo -e "\e[33m[*] Making tests...\e[0m"
-	$(BUILD)/demostatus_test
+	$(BUILD)/testRunner
 
 
 .PHONY: clean install test

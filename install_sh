@@ -2,7 +2,7 @@
 
 {
     echo -e "\e[33m[*] Installing executables.\e[0m"
-    sudo cp build/lsa /usr/local/bin/lsa
+    sudo cp build/lsall /bin/lsall
     sudo cp build/lsall /usr/local/bin/lsall 
     echo -e "\e[32m[+] Successfully installed executables.\e[0m"
 } || {
@@ -15,4 +15,14 @@
 } || {
     echo -e "\e[31m[-] Failed man files installation.\e[0m"
 }
-mkdir /etc/lsall
+{
+    echo -e "\e[33m[*] Installing configuration files.\e[0m"
+    mkdir /etc/lsall
+    mkdir /.config/lsall
+    sudo cp emoji_ext.json /etc/lsall/
+    cp emoji_ext.json ~/.config/lsall/
+    echo -e "\e[32m[+] Successfully installed man files.\e[0m"
+} || {
+    echo -e "\e[31m[-] Failed man files installation.\e[0m"
+}
+

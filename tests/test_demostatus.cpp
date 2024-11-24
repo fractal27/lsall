@@ -1,8 +1,7 @@
 #include <gtest/gtest.h>
-#include <test_emojis.h>
 #include <filesystem>
 #include <vector>
-#include "../src/lsa.cpp"
+#include "../src/lsall.cpp"
 #include "test.cpp"
 #include <string>
 #include <sstream>

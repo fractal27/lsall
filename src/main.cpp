@@ -14,7 +14,7 @@ void show_help(){
                 <<"\t-h -?   \tShow help." << std::endl
                 <<"\t-i      \tGet from input(with no prompt.)." << std::endl
                 <<"\t-f CHAR \tChange the start character of every line." << std::endl
-                <<"\t-F CHAR \tFiller da mettere tra l'inizio della linea e il nome file." << std::endl
+                <<"\t-F CHAR \tFiller to between the start of each line and the filename." << std::endl
                 <<"\t-e      \tDisabilita le emoji." << std::endl
                 <<"\t-s      \tShow the size of every file.." << std::endl
                 <<"\t-p PATH \tShow only one tree(the tree of the path argument)" << std::endl
