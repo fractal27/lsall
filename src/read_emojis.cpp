@@ -14,10 +14,10 @@ namespace emoji{
 
     inline fs::path get_path(){
         // get emoji cofniguration path ()
-        if(fs::exists("/etc/lsall/emoji_ext.json")){
-             return fs::path("/etc/lsall/emoji_ext.json");
-        } else if(fs::exists("~/.config/lsall/emoji_ext.json")){
-             return fs::path("~/.config/lsall/emoji_ext.json");
+        if(fs::exists("/etc/lsall/ext_emoji.json")){
+             return fs::path("/etc/lsall/ext_emoji.json");
+        } else if(fs::exists("~/.config/lsall/ext_emoji.json")){
+             return fs::path("~/.config/lsall/ext_emoji.json");
         } else {
              return fs::path("emoji_ext.json");
         }
