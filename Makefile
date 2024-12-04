@@ -19,7 +19,7 @@ OBJ=$(BUILD)/lsall.o $(BUILD)/main.o
 CXX_FLAGS+=-I $(INCLUDE_DIR)
 
 
-all: $(BUILD)compile link
+all: $(BUILD) compile link
 
 clean:
 	@echo -e "\e[33m[*] Cleaning..\e[0m"
