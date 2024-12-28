@@ -26,7 +26,7 @@ void demo_status(fs::file_status s,bool emoji, std::string path){
         std::string c = emoji::get_emoji(extension+"(-color)");
         if(e != ""){
             if(c != "") std::cout << e << c; 
-            else std::cout << e << FG_RESET;
+            else std::cout << e << " " << FG_RESET;
             return;
         }
 
@@ -104,10 +104,13 @@ bool doesskip(std::string str,std::vector<std::string> exclude_str){
     return false;
 }
 
-void lsall(std::string path,bool showemojis=true,bool showsize=false,
+/*void lsall(std::string path,bool showemojis=true,bool showsize=false,
                   bool showpath = false, char r_start='|', char r = '~', int depth=-1,
-                  std::vector<std::string> toignore = {}, bool onlydirs=false){
+                  std::vector<std::string> toignore = {}, bool onlydirs=false){*/
 
+void lsall(std::string path,bool showemojis,bool showsize,
+                  bool showpath, char r_start, char r, int depth,
+                  std::vector<std::string> toignore, bool onlydirs){
     std::string str;
     std::string cstr;
     std::string last_element;

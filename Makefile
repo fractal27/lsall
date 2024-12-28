@@ -1,10 +1,15 @@
 #Makefile 7/12/2023
+
 SHELL := /bin/bash 
-CXX=g++
+
+CXX=clang++
 CXX_FLAGS=-g
 CXX_FLAGS+=-std=c++2a
 CXX_FLAGS+=-w
-CXX_FLAGS+=-fpermissive
+CXX_FLAGS+=-I $(INCLUDE_DIR)
+CXX_FLAGS+=-O3
+CXX_TEST_FLAGS:=-fpermissive
+
 
 
 LSA_DIR=.
@@ -13,10 +18,8 @@ SRC_DIR=$(LSA_DIR)/src
 INCLUDE_DIR=$(LSA_DIR)/include
 TESTS_DIR=$(LSA_DIR)/tests
 
-
 SRC=$(SRC_DIR)/main.cpp $(SRC_DIR)/lsall.cpp
 OBJ=$(BUILD)/lsall.o $(BUILD)/main.o
-CXX_FLAGS+=-I $(INCLUDE_DIR)
 
 
 all: $(BUILD) compile link
@@ -55,7 +58,7 @@ install: compile link
 	@echo -e "\e[32m[+] Installation done.\e[0m"
 
 $(BUILD)/testRunner: $(TESTS_DIR)/test_demostatus.cpp $(TESTS_DIR)/read_emojis.test.cpp
-	g++ -ljsoncpp $(CXX_FLAGS) -o $(BUILD)/testRunner $(TESTS_DIR)/main.cpp $(TESTS_DIR)/test_demostatus.cpp $(TESTS_DIR)/read_emojis.test.cpp $(INCLUDE_DIR)/build/lib/libgtest.a -w
+	g++ -ljsoncpp $(CXX_FLAGS) $(CXX_TEST_FLAGS) -o $(BUILD)/testRunner $(TESTS_DIR)/main.cpp $(TESTS_DIR)/test_demostatus.cpp $(TESTS_DIR)/read_emojis.test.cpp $(INCLUDE_DIR)/build/lib/libgtest.a -w
 
 
 test: $(BUILD)/testRunner

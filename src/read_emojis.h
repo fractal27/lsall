@@ -9,7 +9,7 @@ namespace fs = std::filesystem;
 
 namespace emoji{
     /*Emoji configuration related*/
-    static inline fs::path get_path();
+    fs::path get_path();
     std::string get_emoji(std::string);
 }
 

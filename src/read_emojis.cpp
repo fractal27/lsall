@@ -7,12 +7,13 @@
 #include "read_emojis.h"//all class definitions
 #include <iostream>
 #include <sstream>      //file handling
+
 namespace fs = std::filesystem;
 
 
 namespace emoji{
 
-    inline fs::path get_path(){
+    fs::path get_path(){
         // get emoji cofniguration path ()
         if(fs::exists("/etc/lsall/ext_emoji.json")){
              return fs::path("/etc/lsall/ext_emoji.json");
