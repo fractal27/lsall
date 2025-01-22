@@ -58,7 +58,7 @@ install: compile link
 	@echo -e "\e[32m[+] Installation done.\e[0m"
 
 $(BUILD)/testRunner: $(TESTS_DIR)/test_demostatus.cpp $(TESTS_DIR)/read_emojis.test.cpp
-	g++ -ljsoncpp $(CXX_FLAGS) $(CXX_TEST_FLAGS) -o $(BUILD)/testRunner $(TESTS_DIR)/main.cpp $(TESTS_DIR)/test_demostatus.cpp $(TESTS_DIR)/read_emojis.test.cpp $(INCLUDE_DIR)/build/lib/libgtest.a -w
+	$(CXX) -ljsoncpp $(CXX_FLAGS) $(CXX_TEST_FLAGS) -o $(BUILD)/testRunner $(TESTS_DIR)/main.cpp $(TESTS_DIR)/test_demostatus.cpp $(TESTS_DIR)/read_emojis.test.cpp $(INCLUDE_DIR)/build/lib/libgtest.a -w
 
 
 test: $(BUILD)/testRunner
