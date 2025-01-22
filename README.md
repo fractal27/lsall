@@ -21,7 +21,9 @@ and just run in bash the simple command while in the cloned project
 
 If you are intruigued at how the installation process works, it just uses a combination of Makefile and some copy commands to add the executable files to the directory `/usr/local/bin/` and the manual(man1) page to the directory `/usr/share/man/man1`.
 
-*NOTE*: Windows and MacOS installation is not yet implemented.
+*NOTE*: Windows and MacOS installation is not yet implemented. but can be achieved via
+`make`, moving the binaries to path and running the program
+
 
 ---
 ## Usage

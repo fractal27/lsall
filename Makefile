@@ -35,9 +35,13 @@ compile: $(SRC)
 	$(MAKE) $(BUILD)/read_emojis.o
 
 $(BUILD):
-	if ![[ -f $(BUILD) ]]; then
+ifeq ($(SHELL),bash)
+	if ![ -f $(BUILD) ]; then
 		mkdir $(BUILD)
 	fi
+else
+	mkdir $(BUILD)
+endif
 
 $(BUILD)/main.o: $(SRC_DIR)/main.cpp
 	$(CXX) -c $(CXX_FLAGS) $(SRC_DIR)/main.cpp -o $(BUILD)/main.o

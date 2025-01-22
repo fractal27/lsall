@@ -1,6 +1,6 @@
 #!/bin/bash
 
-{
+{ # Executables
     echo -e "\e[33m[*] Installing executables.\e[0m"
     sudo cp build/lsall /bin/lsall
     sudo cp build/lsall /usr/local/bin/lsall 
@@ -8,14 +8,16 @@
 } || {
     echo -e "\e[31m[-] Failed executables installation.\e[0m"
 }
-{
+
+{ # Manual
     echo -e "\e[33m[*] Installing man files.\e[0m"
     sudo cp src/lsall.1 /usr/share/man/man1
     echo -e "\e[32m[+] Successfully installed man files.\e[0m"
 } || {
     echo -e "\e[31m[-] Failed man files installation.\e[0m"
 }
-{
+
+{ # Configuration
     echo -e "\e[33m[*] Installing configuration files.\e[0m"
     mkdir /etc/lsall
     mkdir -p ~/.config/lsall
