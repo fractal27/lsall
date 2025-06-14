@@ -30,7 +30,7 @@ TEST_F(read_emojis_Test, icon){
 }
 TEST_F(read_emojis_Test, markdown){
     std::string result = emoji::get_emoji("md");
-    ASSERT_EQ(result,"📓") << "md emoji incorrect";
+    ASSERT_EQ(result,"📜") << "md emoji incorrect";
 }
 TEST_F(read_emojis_Test, camel){
     std::string result = emoji::get_emoji("ml");

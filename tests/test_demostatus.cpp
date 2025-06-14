@@ -37,7 +37,7 @@ std::string demostatus_for_testing(fs::file_status filestatus,bool emojis){
     demo_status(filestatus,emojis,"xx.xx");
 
     std::cout.rdbuf(cout_tmp);
-    return testing::internal::GetCapturedStdout();
+    return buffer.str();
 }
 
 TEST_F(demostatus_Test, test_regular){
