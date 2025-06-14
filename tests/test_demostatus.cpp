@@ -30,8 +30,13 @@ struct arguments{
 class demostatus_Test: public testing::Test{};
 
 std::string demostatus_for_testing(fs::file_status filestatus,bool emojis){
-    testing::internal::CaptureStdout();
+    std::stringstream buffer;
+    std::streambuf *cout_tmp = std::cout.rdbuf();
+    std::cout.rdbuf(buffer.rdbuf());
+
     demo_status(filestatus,emojis,"xx.xx");
+
+    std::cout.rdbuf(cout_tmp);
     return testing::internal::GetCapturedStdout();
 }
 

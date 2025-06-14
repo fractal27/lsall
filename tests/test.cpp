@@ -1,3 +1,6 @@
+#ifndef _TEST_H
+#define _TEST_H
+
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -11,3 +14,4 @@
 
 
 
+#endif // _TEST_H

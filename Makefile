@@ -3,11 +3,11 @@
 SHELL := /bin/bash 
 
 CXX=clang++
-CXX_FLAGS=-g
-CXX_FLAGS+=-std=c++2a
+#CXX_FLAGS=-g
+CXX_FLAGS=-std=c++2a
 CXX_FLAGS+=-w
 CXX_FLAGS+=-I $(INCLUDE_DIR)
-CXX_FLAGS+=-O3
+CXX_FLAGS+=-O2
 CXX_TEST_FLAGS:=-fpermissive
 
 

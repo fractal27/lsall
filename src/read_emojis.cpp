@@ -20,7 +20,7 @@ namespace emoji{
         } else if(fs::exists("~/.config/lsall/ext_emoji.json")){
              return fs::path("~/.config/lsall/ext_emoji.json");
         } else {
-             return fs::path("emoji_ext.json");
+             return fs::path("ext_emoji.json");
         }
     }
 
