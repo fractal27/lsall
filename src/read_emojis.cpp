@@ -7,6 +7,10 @@
 #include "read_emojis.h"//all class definitions
 #include <iostream>
 #include <sstream>      //file handling
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+
 
 namespace fs = std::filesystem;
 
@@ -15,10 +19,19 @@ namespace emoji{
 
     fs::path get_path(){
         // get emoji cofniguration path ()
+		const char *homedir;
+
+		if ((homedir = getenv("HOME")) == NULL) {
+			homedir = getpwuid(getuid())->pw_dir;
+		}
+
+		std::string config_home_path = homedir;
+		config_home_path += "/.config/lsall/ext_emoji.json";
+
         if(fs::exists("/etc/lsall/ext_emoji.json")){
              return fs::path("/etc/lsall/ext_emoji.json");
-        } else if(fs::exists("~/.config/lsall/ext_emoji.json")){
-             return fs::path("~/.config/lsall/ext_emoji.json");
+        } else if(fs::exists(config_home_path)){
+             return fs::path(config_home_path);
         } else {
              return fs::path("ext_emoji.json");
         }
