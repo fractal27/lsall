@@ -10,7 +10,7 @@ For Linux the installation is simple
 1. Download the project via git
 
 ```bash
-git clone https://github.com/GDominici07/lsall.git
+git clone https://github.com/fractal27/lsall.git
 ```
 
 2. Run `make install`
