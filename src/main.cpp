@@ -49,36 +49,35 @@ int main(int argc,char** argv){
         switch(c){
             case 'd':
                 depth = std::atoi(optarg);
-                continue;
+                break;
             case 'D':
                 ONLY_DIRS = true;
-                continue;
+                break;
             case 'i':
                 INPUTMODE = true;
-                continue;
+                break;
             case 'F':
                 r_char = std::string(optarg)[0];
-                continue;
+                break;
             case 'f':
                 r_start = std::string(optarg)[0];
-                continue;
+                break;
             case 'p':
                 path = std::string(optarg);
-                continue;
+                break;
             case 's':
                 SHOWSIZE=true;
-                continue;
+                break;
             case 'S':
                 SHOW_PATH=true;
-                continue;
+                break;
             case 'e':
                 DISABLEEMOJI = true;
-                continue;
+                break;
             case 'x':
                 exclude_patterns.push_back(std::string(optarg));
-                continue;
+                break;
             default:
-
                 fprintf(stderr,"Argument -%c not found: here is commands:\n",c);
                 show_help();
                 std::exit(1);

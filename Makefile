@@ -2,15 +2,16 @@
 
 SHELL := /bin/bash 
 
-CXX=clang++
+CXX?=clang++
 #CXX_FLAGS=-g
 CXX_FLAGS=-std=c++2a
-CXX_FLAGS+=-w
-CXX_FLAGS+=-I $(INCLUDE_DIR)
-CXX_FLAGS+=-O2
+CXX_FLAGS+= -w
+CXX_FLAGS+= -I $(INCLUDE_DIR)
+CXX_FLAGS+= -O2
+CXX_FLAGS+= `pkgconf --cflags jsoncpp`
 CXX_TEST_FLAGS:=-fpermissive
 
-
+LIBS=`pkgconf --libs jsoncpp`
 
 LSA_DIR=.
 BUILD=$(LSA_DIR)/build
@@ -54,7 +55,7 @@ $(BUILD)/read_emojis.o: $(SRC_DIR)/read_emojis.cpp $(SRC_DIR)/read_emojis.h
 
 link: $(OBJ)
 	@echo -e "\e[32m[+] Linking object files $(OBJ)\e[0m"
-	$(CXX) -ljsoncpp $(CXX_FLAGS) $(BUILD)/lsall.o $(BUILD)/main.o $(BUILD)/read_emojis.o -o $(BUILD)/lsall
+	$(CXX) -$(CXX_FLAGS) $(BUILD)/lsall.o $(BUILD)/main.o $(BUILD)/read_emojis.o -o $(BUILD)/lsall $(LIBS)
 
 install: compile link
 	@echo -e "\e[33m[*] Installing...\e[0m"
