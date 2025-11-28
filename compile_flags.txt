@@ -1,0 +1,9 @@
+-O2
+-fpermissive
+-std=c++2a
+-I
+include
+-l
+jsoncpp
+-xc++
+
