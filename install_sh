@@ -1,9 +1,28 @@
 #!/bin/bash
+echo "Do you want to install locally onto a path? (y/N)"
+read response
+
+if [[ "$response" != "y" || "$reponse" != "Y" ]]; then
+
+	LOCAL=1
+	echo "You have chosen to install locally on a path. \nThis will automatically install \$local_path/bin/lsall, \$local_path/man/man1/lsall.1."
+	printf "On which path is the prefix?(default ~/.local)"
+	read local_path
+	if ! [ $local_path ]; then
+		local_path="$HOME/.local"
+		echo "Setting local_path to the default.. OK"
+	fi
+fi
 
 { # Executables
     echo -e "\e[33m[*] Installing executables.\e[0m"
-    sudo cp build/lsall /bin/lsall
-    sudo cp build/lsall /usr/local/bin/lsall 
+	if [ $local_path ]; then
+		echo "on: $local_path"
+		install build/lsall $local_path/bin/lsall
+	else
+		sudo cp build/lsall /bin/lsall
+		sudo cp build/lsall /usr/local/bin/lsall 
+	fi
     echo -e "\e[32m[+] Successfully installed executables.\e[0m"
 } || {
     echo -e "\e[31m[-] Failed executables installation.\e[0m"
@@ -11,7 +30,13 @@
 
 { # Manual
     echo -e "\e[33m[*] Installing man files.\e[0m"
-    sudo cp src/lsall.1 /usr/share/man/man1
+	if [ $local_path ]; then
+		echo "on: $local_path"
+		mkdir -p $local_path/man/man1/
+		install src/lsall.1 $local_path/man/man1/
+	else
+		sudo install src/lsall.1 /usr/share/man/man1
+	fi
     echo -e "\e[32m[+] Successfully installed man files.\e[0m"
 } || {
     echo -e "\e[31m[-] Failed man files installation.\e[0m"
@@ -19,10 +44,10 @@
 
 { # Configuration
     echo -e "\e[33m[*] Installing configuration files.\e[0m"
-    mkdir /etc/lsall
-    mkdir -p ~/.config/lsall
-    sudo cp ext_emoji.json /etc/lsall/
-    cp ext_emoji.json $HOME/.config/lsall/
+	sudo mkdir -p /etc/lsall
+	mkdir -p ~/.config/lsall
+	sudo cp ext_emoji.json /etc/lsall/
+	cp ext_emoji.json $HOME/.config/lsall
     echo -e "\e[32m[+] Successfully installed man files.\e[0m"
 } || {
     echo -e "\e[31m[-] Failed man files installation.\e[0m"
